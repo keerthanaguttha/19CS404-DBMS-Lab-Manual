@@ -1,8 +1,8 @@
 # Experiment 8: PL/SQL Cursor Programs
-```
-Name : Guttha Keerthana
-Reg No: 21223240045
-```
+
+### Name : Guttha Keerthana
+### Reg No: 21223240045
+
 
 ## AIM
 To write and execute PL/SQL programs using cursors and exception handling to manage runtime errors effectively and display appropriate messages.
