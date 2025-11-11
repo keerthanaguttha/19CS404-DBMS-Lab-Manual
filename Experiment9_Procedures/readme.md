@@ -1,5 +1,4 @@
 # Experiment 9: PL/SQL – Procedures and Functions
-
 ## AIM
 To understand and implement procedures and functions in PL/SQL for performing various operations such as calculations, decision-making, and looping.
 
@@ -60,24 +59,25 @@ Key Differences:
 - Use `DBMS_OUTPUT.PUT_LINE` to display the result.
 - Call the procedure with a number as input.
 
-**Expected Output:**  
-Square of 6 is 36
-
+#### Program:
 ```
-CREATE OR REPLACE PROCEDURE find_square(num IN NUMBER)
+CREATE OR REPLACE PROCEDURE find_square (num IN NUMBER)
 IS
    result NUMBER;
 BEGIN
    result := num * num;
    DBMS_OUTPUT.PUT_LINE('Square of ' || num || ' is ' || result);
 END;
-/
-
--- Execution
-EXEC find_square(6);
+```
 
 ```
-<img width="469" height="118" alt="image" src="https://github.com/user-attachments/assets/164b22c8-e2e9-4506-9a97-aeb778a4acb6" />
+EXEC find_square(6);
+```
+
+**Expected Output:**  
+Square of 6 is 36
+![op1](https://github.com/user-attachments/assets/533227d9-6718-4bb9-88e6-8222e3d797b8)
+
 
 
 ---
@@ -91,25 +91,30 @@ EXEC find_square(6);
 - Return the result using the `RETURN` statement.
 - Call the function using a `SELECT` statement or in an anonymous block.
 
-**Expected Output:**  
-Factorial of 5 is 120
+#### Program:
 ```
-CREATE OR REPLACE FUNCTION get_factorial(n IN NUMBER)
+CREATE OR REPLACE FUNCTION get_factorial (n IN NUMBER)
 RETURN NUMBER
 IS
    fact NUMBER := 1;
-   i NUMBER;
 BEGIN
    FOR i IN 1..n LOOP
       fact := fact * i;
    END LOOP;
    RETURN fact;
 END;
-/
-SELECT get_factorial(5) AS factorial FROM DUAL;
+```
+```
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('Factorial of 5 is ' || get_factorial(5));
+END;
 ```
 
-<img width="828" height="255" alt="image" src="https://github.com/user-attachments/assets/64a69248-eca4-4bcf-9d15-453d781ead61" />
+**Expected Output:**  
+Factorial of 5 is 120
+
+![op2](https://github.com/user-attachments/assets/0eefbe95-da02-4001-8b92-e1e374f517ac)
+
 
 ---
 
@@ -121,25 +126,26 @@ SELECT get_factorial(5) AS factorial FROM DUAL;
 - Use the `MOD` function to check if the number is divisible by 2.
 - Display whether it is Even or Odd using `DBMS_OUTPUT.PUT_LINE`.
 
+#### Program:
+```
+CREATE OR REPLACE PROCEDURE check_even_odd (n IN NUMBER)
+IS
+BEGIN
+   IF MOD(n, 2) = 0 THEN
+      DBMS_OUTPUT.PUT_LINE(n || ' is Even');
+   ELSE
+      DBMS_OUTPUT.PUT_LINE(n || ' is Odd');
+   END IF;
+END;
+```
+```
+EXEC check_even_odd(12);
+```
+
 **Expected Output:**  
 12 is Even
 
-```
-CREATE OR REPLACE PROCEDURE check_even_odd(num IN NUMBER)
-IS
-BEGIN
-   IF MOD(num, 2) = 0 THEN
-      DBMS_OUTPUT.PUT_LINE(num || ' is Even');
-   ELSE
-      DBMS_OUTPUT.PUT_LINE(num || ' is Odd');
-   END IF;
-END;
-/
-EXEC check_even_odd(12);
-
-```
-
-<img width="500" height="130" alt="image" src="https://github.com/user-attachments/assets/dbd8dfa6-2b46-4cd3-8244-5e659b47d851" />
+![op3](https://github.com/user-attachments/assets/5fe13720-02e9-45ad-aa6a-43a10a94b5d7)
 
 
 ---
@@ -153,27 +159,31 @@ EXEC check_even_odd(12);
 - Return the reversed number.
 - Call the function and display the output.
 
-**Expected Output:**  
-Reversed number of 1234 is 4321
-
+#### Program:
 ```
-CREATE OR REPLACE FUNCTION reverse_number(n IN NUMBER)
+CREATE OR REPLACE FUNCTION reverse_number (n IN NUMBER)
 RETURN NUMBER
 IS
    rev NUMBER := 0;
    temp NUMBER := n;
 BEGIN
    WHILE temp > 0 LOOP
-      rev := (rev * 10) + MOD(temp, 10);
-      temp := FLOOR(temp / 10);
+      rev := rev * 10 + MOD(temp, 10);
+      temp := TRUNC(temp / 10);
    END LOOP;
    RETURN rev;
 END;
-/
-SELECT reverse_number(1234) AS reversed FROM DUAL;
+```
+```
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('Reversed number of 1234 is ' || reverse_number(1234));
+END;
 ```
 
-<img width="569" height="161" alt="image" src="https://github.com/user-attachments/assets/fb225216-f99b-4151-8bf0-4d3637b2b3f0" />
+**Expected Output:**  
+Reversed number of 1234 is 4321
+
+![op4](https://github.com/user-attachments/assets/759cedd2-6cd8-4a1b-9a56-26f88bd86797)
 
 
 ---
@@ -186,6 +196,21 @@ SELECT reverse_number(1234) AS reversed FROM DUAL;
 - Use a loop from 1 to 10 to multiply the input number.
 - Display the multiplication results using `DBMS_OUTPUT.PUT_LINE`.
 
+#### Program:
+```
+CREATE OR REPLACE PROCEDURE print_table (n IN NUMBER)
+IS
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('Multiplication table of ' || n || ':');
+   FOR i IN 1..10 LOOP
+      DBMS_OUTPUT.PUT_LINE(n || ' x ' || i || ' = ' || (n * i));
+   END LOOP;
+END;
+```
+```
+EXEC print_table(5);
+```
+
 **Expected Output:**  
 Multiplication table of 5:  
 5 x 1 = 5  
@@ -194,21 +219,10 @@ Multiplication table of 5:
 ...  
 5 x 10 = 50
 
-```
-CREATE OR REPLACE PROCEDURE print_table(num IN NUMBER)
-IS
-BEGIN
-   DBMS_OUTPUT.PUT_LINE('Multiplication table of ' || num || ':');
-   FOR i IN 1..10 LOOP
-      DBMS_OUTPUT.PUT_LINE(num || ' x ' || i || ' = ' || (num * i));
-   END LOOP;
-END;
-/
-EXEC print_table(5);
-```
+![op5](https://github.com/user-attachments/assets/6eb9acff-de64-4eee-9607-3d3f9ae6fb28)
 
-<img width="436" height="360" alt="image" src="https://github.com/user-attachments/assets/ec4c6117-7546-4f12-90f2-ec6f6a992b06" />
 
+---
 
 ## RESULT
 Thus, the PL/SQL programs using procedures and functions were written, compiled, and executed successfully.
